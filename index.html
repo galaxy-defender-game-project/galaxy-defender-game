@@ -1,54 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Galaxy Defender</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Defender</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <canvas id="sfCanvas"></canvas>
 
-<canvas id="sfCanvas"></canvas>
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+        <div class="hb"><span class="hl">Score</span><span class="hv" id="hScore">0</span></div>
+        <div class="hb"><span class="hl">Lives</span><div class="lives-wrap" id="hLives"></div></div>
+        <div class="hb"><span class="hl">Level</span><span class="hv" id="hLevel">1</span></div>
+        <div class="hb"><span class="hl">Boss</span><span class="hv" id="hBoss" style="display:none">⚠ ACTIVE</span></div>
+    </div>
+    <div id="bossBar"><div id="bossBarFill" style="width:100%"></div></div>
 
-<!-- HUD -->
-<div id="hud" class="hidden">
-  <div class="hb"><span class="hl">Score</span><span class="hv" id="hScore">0</span></div>
-  <div class="hb"><span class="hl">Lives</span><div class="lives-wrap" id="hLives"></div></div>
-  <div class="hb"><span class="hl">Level</span><span class="hv" id="hLevel">1</span></div>
-</div>
+    <div id="powerPanel">
+        <div class="pw rapid off" id="pwRapid">⚡ RAPID</div>
+        <div class="pw multi off" id="pwMulti">💥 MULTI</div>
+        <div class="pw shield off" id="pwShield">🛡 SHIELD</div>
+    </div>
 
-<!-- Name Screen -->
-<div id="nameScreen" class="screen">
-  <div class="game-title">Galaxy Defender</div>
-  <div class="subtitle">Defend the Universe</div>
-  <div class="panel">
-    <input id="nameInput" placeholder="YOUR NAME"/>
-    <button onclick="confirmName()">Continue</button>
-  </div>
-</div>
+    <div id="toast"></div>
+    <div id="pauseOverlay">
+        <div class="pause-title">⏸ PAUSED</div>
+        <div class="pause-hint">P or Esc to resume</div>
+        <button class="btn-resume" onclick="togglePause()">▶ Resume</button>
+        <button class="btn-quit" onclick="quitToMenu()">✕ Quit to Menu</button>
+    </div>
 
-<!-- Menu -->
-<div id="menuScreen" class="screen hidden">
-  <div class="game-title">Galaxy Defender</div>
-  <button onclick="startGame()">Start Game</button>
-</div>
+    <!-- Name Entry Screen -->
+    <div id="nameScreen" class="screen">
+        <div class="game-title">Galaxy Defender</div>
+        <div class="subtitle">Defend the Universe</div>
+        <div class="panel">
+            <div class="lb-title">👾 Enter Your Name</div>
+            <input class="name-input" id="nameInput" maxlength="16" placeholder="YOUR NAME" autocomplete="off" spellcheck="false"/>
+            <button class="btn btn-p" onclick="confirmName()">▶ Continue</button>
+            <div class="hint">Max 16 characters</div>
+        </div>
+    </div>
 
-<!-- Game Canvas -->
-<canvas id="gc"></canvas>
+    <!-- Main Menu -->
+    <div id="menuScreen" class="screen hidden">
+        <div class="game-title">Galaxy Defender</div>
+        <div class="subtitle">Defend the Universe</div>
+        <div class="panel">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
+                <div class="current-player">Playing as</div>
+                <div class="player-badge" id="currentPlayerName">—</div>
+                <button class="switch-btn" onclick="switchPlayer()">⇄ Switch Player</button>
+            </div>
+            <div class="divider"></div>
+            <div class="lb-title">🏆 Leaderboard</div>
+            <div id="lbList" style="width:100%"></div>
+            <div class="divider"></div>
+            <button class="btn btn-p" onclick="startGame()">▶ Launch Mission</button>
+            <div class="hint">← → or A D move &nbsp;|&nbsp; Space fire &nbsp;|&nbsp; P pause</div>
+        </div>
+    </div>
 
-<!-- Game Over -->
-<div id="goScreen" class="screen hidden">
-  <h1>Game Over</h1>
-  <p>Score: <span id="goScore">0</span></p>
-  <button onclick="startGame()">Retry</button>
-</div>
+    <!-- Game Canvas -->
+    <canvas id="gc"></canvas>
 
-<!-- JS -->
-<script src="script.js"></script>
+    <!-- Game Over Screen -->
+    <div id="goScreen" class="screen hidden">
+        <div class="go-t">Mission Failed</div>
+        <div class="go-sub" id="goPlayerName"></div>
+        <div class="score-big">Score: <span id="goScore">0</span></div>
+        <div class="hs-badge" id="goBadge"></div>
+        <div class="panel" style="gap:10px;padding:20px 36px;">
+            <button class="btn btn-p" onclick="startGame()">↻ Try Again</button>
+            <button class="btn btn-s" onclick="showMenu()">⌂ Main Menu</button>
+        </div>
+    </div>
+
+    <!-- Mobile Controls -->
+    <div id="mc">
+        <button class="cb" id="leftBtn">◀</button>
+        <button class="cb fire-cb" id="fireBtn">🔥</button>
+        <button class="cb" id="rightBtn">▶</button>
+    </div>
+
+    <script src="js/game.js"></script>
 </body>
 </html>
