@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galaxy Defender</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="sfCanvas"></canvas>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div class="hb"><span class="hl">Score</span><span class="hv" id="hScore">0</span></div>
+  <div class="hb"><span class="hl">Lives</span><div class="lives-wrap" id="hLives"></div></div>
+  <div class="hb"><span class="hl">Level</span><span class="hv" id="hLevel">1</span></div>
+</div>
+
+<!-- Name Screen -->
+<div id="nameScreen" class="screen">
+  <div class="game-title">Galaxy Defender</div>
+  <div class="subtitle">Defend the Universe</div>
+  <div class="panel">
+    <input id="nameInput" placeholder="YOUR NAME"/>
+    <button onclick="confirmName()">Continue</button>
+  </div>
+</div>
+
+<!-- Menu -->
+<div id="menuScreen" class="screen hidden">
+  <div class="game-title">Galaxy Defender</div>
+  <button onclick="startGame()">Start Game</button>
+</div>
+
+<!-- Game Canvas -->
+<canvas id="gc"></canvas>
+
+<!-- Game Over -->
+<div id="goScreen" class="screen hidden">
+  <h1>Game Over</h1>
+  <p>Score: <span id="goScore">0</span></p>
+  <button onclick="startGame()">Retry</button>
+</div>
+
+<!-- JS -->
+<script src="script.js"></script>
+</body>
+</html>
